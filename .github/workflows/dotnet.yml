@@ -33,3 +33,23 @@ jobs:
         name: drop
         path:  ${{ github.workspace }}/taa-portal/
         if-no-files-found: error
+  release-to-dev:
+    runs-on: ubuntu-latest
+    
+    needs: [ build ]
+    
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:      
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v2.0.5
+      with:
+        name: drop
+        path: ./taa-portal/
+        
+    - name: Azure WebApp
+      uses: Azure/webapps-deploy@v2
+      with:
+        app-name: AnimalAdoptionApp
+        publish-profile: ${{ secrets.AnimalAdoptionAppPublishSettings }}
+        package: ./taa-portal/
