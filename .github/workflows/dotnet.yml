@@ -53,3 +53,14 @@ jobs:
         app-name: AnimalAdoptionApp
         publish-profile: ${{ secrets.AnimalAdoptionAppPublishSettings }}
         package: ./taa-portal/
+
+    - name: Azure Login
+      uses: Azure/login@v1.1
+      with:
+        creds: ${{ secrets.AnimalAdoptionServicePrincipal }}
+
+    - name: Azure App Service Settings
+      uses: Azure/appservice-settings@v1
+      with:
+        app-name: AnimalAdoptionApp
+        app-settings-json: '[{"name": "GlobalPassword","value": "${{ secrets.GlobalPassword }}","slotSetting": false},{"name": "SimulatedFailureChance","value": "${{ secrets.SimulatedFailureChance }}","slotSetting": false}]'
