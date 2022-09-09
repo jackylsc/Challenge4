@@ -95,7 +95,7 @@ jobs:
       PROD_KEY_VAULT_NAME: kv-prod-aueast-azsprints
       PROD_WEB_APP_NAME: wa-prod-aueast-azsprintseries
       PROD_APP_SERVICE_PLAN_NAME: plan-prod-aueast-azsprintseries
-      PROD_WEB_APP_SLOT_TO_DEPLOY_TO: production
+      PROD_WEB_APP_SLOT_TO_DEPLOY_TO: Staging
 
     steps:
       - name: Download the bicep-template artifact
