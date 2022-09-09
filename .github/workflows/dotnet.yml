@@ -85,7 +85,7 @@ jobs:
       with:
         name: bicep-template
         #name: deploy.bicep
-        path: ${{ github.workspace }}/deploy.bicep
+        path: ./bicep-template/
         if-no-files-found: error
 
   release-to-prod-env:
