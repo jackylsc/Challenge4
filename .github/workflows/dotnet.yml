@@ -83,8 +83,9 @@ jobs:
     - name: Upload a build artifact for the Bicep template
       uses: actions/upload-artifact@v2.1.3
       with:
-        name: bicep-template
-        path: deploy.bicep
+        #name: bicep-template
+        name: deploy.bicep
+        path: ${{ github.workspace }}/deploy.bicep
         if-no-files-found: error
 
   release-to-prod-env:
@@ -104,8 +105,10 @@ jobs:
       - name: Download the bicep-template artifact
         uses: actions/download-artifact@v2.0.5
         with:
-          name: bicep-template
-          path: ./bicep-template/
+          #name: bicep-template
+          name: deploy.bicep
+          path: ./deploy.bicep/
+          #path: ./bicep-template/
 
       - name: Login to Azure using the Production SP credentials
         uses: Azure/login@v1.1
