@@ -58,9 +58,18 @@ jobs:
       uses: Azure/login@v1.1
       with:
         creds: ${{ secrets.AnimalAdoptionServicePrincipal }}
+        
+    - name: Get Secrets from Test Key Vault
+      id: getSecretsFromTestKeyVault
+      uses: Azure/get-keyvault-secrets@v1
+      with:
+        keyvault: AnimalAdoptionKeyVault
+        secrets: 'GlobalPassword, SimulatedFailureChance'
 
     - name: Azure App Service Settings
       uses: Azure/appservice-settings@v1
       with:
         app-name: AnimalAdoptionApp
-        app-settings-json: '[{"name": "GlobalPassword","value": "${{ secrets.GlobalPassword }}","slotSetting": false},{"name": "SimulatedFailureChance","value": "${{ secrets.SimulatedFailureChance }}","slotSetting": false}]'
+        #app-settings-json: '[{"name": "GlobalPassword","value": "${{ secrets.GlobalPassword }}","slotSetting": false},{"name": "SimulatedFailureChance","value": "${{ secrets.SimulatedFailureChance }}","slotSetting": false}]'
+        app-settings-json: '[{"name": "GlobalPassword","value": "${{ steps.getSecretsFromTestKeyVault.outputs.GlobalPassword }}","slotSetting": false},{"name": "SimulatedFailureChance","value": "${{ steps.getSecretsFromTestKeyVault.outputs.SimulatedFailureChance }}","slotSetting": false}]'
+
