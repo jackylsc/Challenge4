@@ -33,6 +33,15 @@ jobs:
         name: drop
         path:  ${{ github.workspace }}/taa-portal/
         if-no-files-found: error
+      
+
+    - name: Upload a build artifact for the Bicep template
+      uses: actions/upload-artifact@v2.1.3
+      with:
+        name: bicep-template
+        path: deploy.bicep
+        if-no-files-found: error   
+        
   release-to-dev:
     runs-on: ubuntu-latest
     
@@ -73,20 +82,6 @@ jobs:
         #app-settings-json: '[{"name": "GlobalPassword","value": "${{ secrets.GlobalPassword }}","slotSetting": false},{"name": "SimulatedFailureChance","value": "${{ secrets.SimulatedFailureChance }}","slotSetting": false}]'
         app-settings-json: '[{"name": "GlobalPassword","value": "${{ steps.getSecretsFromTestKeyVault.outputs.GlobalPassword }}","slotSetting": false},{"name": "SimulatedFailureChance","value": "${{ steps.getSecretsFromTestKeyVault.outputs.SimulatedFailureChance }}","slotSetting": false}]'
 
-    - name: Upload a build artifact for the TAA web portal
-      uses: actions/upload-artifact@v2.1.3
-      with:
-        name: taa-portal
-        path:  ${{ github.workspace }}/taa-portal/
-        if-no-files-found: error
-
-    - name: Upload a build artifact for the Bicep template
-      uses: actions/upload-artifact@v2.1.3
-      with:
-        name: bicep-template
-        #name: deploy.bicep
-        path: ./bicep-template/
-        if-no-files-found: error
 
   release-to-prod-env:
     runs-on: ubuntu-latest
