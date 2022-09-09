@@ -122,7 +122,7 @@ jobs:
       - name: Download the TAA web portal artifact
         uses: actions/download-artifact@v2.0.5
         with:
-          name: taa-portal
+          name: drop
           path: ./taa-portal/
       - name: Deploy the TAA portal to the Production Web App
         uses: Azure/webapps-deploy@v2
